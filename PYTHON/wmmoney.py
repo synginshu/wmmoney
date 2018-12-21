@@ -2,7 +2,8 @@
 
 import sys
 from tokenize import tokenize
-from Account import Account
+from Account import Account, AccountController
+
 from MoneyDB import MoneyDB
 
 import sys, getopt
@@ -24,14 +25,20 @@ def interactive():
 def process(argv):
 	global quit
 	global db
+	didSomething = False
 
 	print ('Processing:' , argv[0:])
 	if argv[0] == 'quit':
 		quit = True
+		didSomething = True
 
+	# Create account
 	if argv[0] == 'ca':
-		a = Account('AcctID','CASH','My Cash','MYR',10000,'Notes')
-		a.create(db)	
+		ac = AccountController()
+		didSomething = ac.createAccount(argv,db)
+
+	if didSomething == False or argv[0] == 'help':
+		print ("List of commands\n ca - create account\n quit - Quit")
 
 # Initialize the quit flag
 quit = False
