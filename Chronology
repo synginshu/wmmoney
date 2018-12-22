@@ -1,0 +1,200 @@
+Chronology
+---
+
+
+---
+
+Dec 21 2018
+Decide to write a command line money management program to replace MS money.
+Choosing language, frameworks and database - decided on Python.
+
+First step is to read a file from my bank. Unfortunately they only provide PDF files.
+
+Found a module to read PDF called Tika.
+Installed the module by going to git hub
+https://github.com/chrismattmann/tika-python
+
+ran 
+python3.7 setup.py build
+python3.7 setup.py install
+
+Write some code, but it says i need JDK.
+
+Download JDK 11.0.1
+
+For database, first considered MySQL. Then looked for something even lighter. SQLite.
+
+6:13pm - My first success. I managed to read a PDF file and output to screen.
+
+Next step is to write the data to database. Googling python and sqlite
+
+6:37pm - My second success. I managed to create a DB file and write to it using python.
+
+I suppose now I have to design the database. Gonna fire up excel.
+
+7:17pm I've created 8 tables. Without datatypes or indexes. These can be added later. Taking a dinner break.
+
+8:21pm Back from dinner and I added date types and indexes to the database.
+All stored in this file.
+.read '/Users/keith/Documents/GitHub/wmmoney/DATABASE/tables.sql'
+
+Let me add a few categories now.
+
+8:35pm Use this to read some category data
+.read '/Users/keith/Documents/GitHub/wmmoney/DATABASE/basedata.sql'
+
+Now to build the command line interface and use it to setup accounts.
+
+Googling python command line
+
+9:07pm I have a rudimentary command line:
+It has interactive and single line.
+
+It runs like this:
+
+python3.7 wmmoney.py interactive
+Entering interactive mode
+Money> 1 2 3
+Processing: ['1', '2', '3']
+Money> quit
+Processing: ['quit']
+
+OR
+
+python3.7 wmmoney.py 1 2 3
+Processing: ['1', '2', '3']
+
+OR
+
+python3.7 wmmoney.py quit
+Processing: ['quit']
+
+Now just add handlers to the processing part
+I think at this point, i'll need classes. So far its all procedural calls.
+
+Googling python classes.
+
+9:38pm Created a first class. Struggled a bit with the namespace. I put __init__.py but could not load. Turns out I saved the file in the database folder and not the python folder.
+
+Second problem I had was indenting. Python is particular about tabs vs spaces.
+
+Next step is to insert into database.
+
+9:58pm Managed to insert a hardcoded data into the database. Well. I'm working faster than I expected.
+
+Let's do a github checkin.
+
+10:41pm Created an AccountHandler to clean up the code somewhat. I have one functionality done. I think I need a list of functionality and a workplan to implement them.
+
+10:50PM I've listed 22 functions. So far implemented 1 (Not including quit and help). These 22 are only admin stuff. We've not got into reporting. I think at this rate I might have 22 functions ready by tomorrow. We'll see.
+
+Signing off for the day.
+
+---
+
+Dec 22 
+
+11:04am
+
+Want to make the main script simpler, by offloading the processing to the Controller.
+commands starting with A - passed to the AccountsController and so forth.
+
+That way, there's no huge nested if...then in the main program.
+Googling python startsWith
+
+11:34am
+Got the main controller working. Also fiddled with the fonts on my terminals and setup the DB and Script terminals.
+Also played with the fonts.
+
+I think in order to match the transactions from the parsed PDF file to the acctID in the database, I need to link the account number into the database. Hang on. adding that to the DB and code.
+
+11:49am
+Done. And learned one new concept. Using \ to break to next line in code.
+Thinking of implementing some better logging since debugging this is starting to get hairy.
+
+12:01pm
+Done. Implemented a wrapper module called logging to log debug messages and SQL messages. Later this will be output to file or triggered by a flag.
+Now get started on the EXCEL file functions now.
+
+12:58pm
+I implemented the viewDetail function. Also broke the log up into Exception/and output instead of print. My MicroSD card arrived so i'm gonna spend some time testing it before putting it on my phone.
+
+1:34pm
+It's copying 20GB out of 128GB. At this rate, it'll be Another 2 hours to complete. Back to programming. Let's do three, update, delete and list.
+
+2:00pm
+Found a slight problem. Changing queries from this:
+c.execute("SELECT * FROM stocks WHERE symbol = '%s'" % symbol)
+
+To this
+t = ('RHAT',)
+c.execute('SELECT * FROM stocks WHERE symbol=?', t)
+
+2:31pm
+Fixed the param passing issue. Implemented and tested update/delete/insert and view. Now list.
+
+2:42pm
+List also works now. 5 functions implemented. 1 module completed. We'll do two smaller ones. Tag and categories. Progress of copying 80/128GB
+
+3:07pm
+Categories, 3 functions, 1 module completed. Now for Tag.
+
+3:30pm
+Tags 3 functions, 1 module completed. Only 2 more modules to go.
+Gonna take a break for now.
+
+---
+
+6:43pm
+Resume - with transaction, the most difficult one.
+
+7:07pm
+Done with the create function. Take a break to have a bath before dinner.
+
+7:15pm
+Had a bath and also completed Delete function.
+
+7:40pm
+Finished dinner. Back to coding. Update method this time.
+
+7:44pm
+So easy. Update method done. Remaining is list, view and tag.
+
+8:13pm
+View, List and Tagging works. Also added untagging. Just portfolio to go.
+
+8:54pm
+Portfolio create is done. Used subclassing to accomplish inserting two records with one method.
+
+8:55pm
+Portfolio delete and update is also done.
+
+9:17pm
+Portfolio list and view works. I should have captured the test scripts to create data. Oh well. We're done with the basics. Tomorrow we'll try parsing the PDF output and posting the data into the DB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
