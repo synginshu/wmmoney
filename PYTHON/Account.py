@@ -145,11 +145,13 @@ class AccountController:
         try:
             if len(argv) == 7:
                 a = Account('AcctID',argv[1],argv[2],argv[3],argv[4],argv[5],argv[6],'')
-
-            if len(argv) == 8:
+            elif len(argv) >= 8:
                 a = Account('AcctID',argv[1],argv[2],argv[3],argv[4],argv[5],argv[6],argv[7])
+            else:
+                raise ValueError("Incorrect number of parameters")
             a.create(db)     
         except Exception as e:
+            print ("ac [Type: 1|2] [Name] [Bank] [AccountNo] [Currency MYR|USD] [Starting Balance] [Notes]")
             logging.logException (e)
         except UnboundLocalError as valerr:
             print ("ac [Type: 1|2] [Name] [Bank] [AccountNo] [Currency MYR|USD] [Starting Balance] [Notes]")

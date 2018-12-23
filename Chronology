@@ -170,7 +170,29 @@ Portfolio create is done. Used subclassing to accomplish inserting two records w
 Portfolio delete and update is also done.
 
 9:17pm
-Portfolio list and view works. I should have captured the test scripts to create data. Oh well. We're done with the basics. Tomorrow we'll try parsing the PDF output and posting the data into the DB.
+Portfolio list and view works. I should have captured the test scripts to create data. Oh well. We're done with the basics. Tomorrow we'll try parsing the PDF output and posting the data into the DB. Let's do a check in.
+
+---
+Dec 23
+11:00am Restarted programming. Focus on parsing.
+
+12:54pm I finished parsing 1 file. I'm able to extract 4 transactions from 2 accounts. However to post these transactions into the system, I need to be able to access the CLI and the CLI needs to have some helper functions. For example, in the PDF I have the account number but not the AcctID. So I need to query the AcctID. I've implemented that. But now I need to be able to call the python code, from another python module. Working on that now. - after lunch.
+
+1:16pm Back to work
+
+2:50pm I've managed to allow calling parties to insert a stream to logging so it can extract the results. So query acctID works now. Next I parsed the date and the amount. Those work. My next problem is mapping the transaction details to EXP/INC Level1 and Level2. My idea is to create a CSV mapping. Have the system read this into memory and parse accordingly. Let's try.
+
+3:15pm I've got it working with a hardcoded dictionary. While not yet posting. Just have to post it. Then switch the dict to a CSV or delimited file. Taking a break.
+
+4:00pm Resume after break
+
+4:34pm I've got the CSV file working and also testing the parsing of the program with the correct acct numbers. All 5 transactions are captured. Perhaps will try with other PDF of similar formats. Then move to another file. Going to the Gym now.
+
+
+
+
+
+
 
 
 

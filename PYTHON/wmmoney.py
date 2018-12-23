@@ -8,7 +8,7 @@ from Categories import Category, CategoryController
 from Tag import Tag, TagController
 from Transaction import Transaction, TransactionController
 from Portfolio import Portfolio, PortfolioController
-import Logging
+from Query import QueryController
 
 
 from MoneyDB import MoneyDB
@@ -16,6 +16,8 @@ from MoneyDB import MoneyDB
 import sys, getopt
 
 def main(argv):
+	logging.setoutput(sys.stdout)
+
 	if len(argv) >= 1 and argv[0] == 'interactive':
 		interactive()
 	else:
@@ -69,6 +71,17 @@ def process(argv):
 		logging.logDebug ('Portfolio')
 		pc = PortfolioController()
 		didSomething = pc.process(argv,db)
+
+	# All query stuff
+	if argv[0].startswith('q'):
+		logging.logDebug ('Query')
+		qc = QueryController()
+		didSomething = qc.process(argv,db)
+
+	# log the command if we did something
+	if didSomething:
+		command = " ".join(str(x) for x in argv)
+		logging.logCommand(command)
 
 	if didSomething == False or argv[0] == 'help':
 		logging.output ("List of commands\n ca - create account\n quit - Quit")
